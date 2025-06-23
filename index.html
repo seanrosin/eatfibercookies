@@ -98,9 +98,10 @@
         <!-- Call to Action -->
         <div class="container mt-3 text-center">
           <h1 class="text-info">Join our Fiber Fam!</h1>
-          <button class="btn btn-success mt-3">Reserve Your Cookies</button>
+          <button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#reserveModal">
+            Reserve Your Cookies
+          </button>
         </div>
-
       </div>
     </div>
   </section>
@@ -121,6 +122,66 @@
     <p class="lead">A cookie a day keeps the bloat away.</p>
     <button class="btn btn-success mt-3">Shop Cookies</button>
   </div> -->
+
+
+  <!-- reserve modal -->
+  <div class="modal fade" id="reserveModal" tabindex="-1" aria-labelledby="reserveModalLabel" aria-hidden="true"  data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="reserveModalLabel">You're on the list! 🎉</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <p>Thanks for your interest! We’ll let you know as soon as FiberCookies are available.</p>
+          <input type="email" id="waitlistEmail" class="form-control mt-3" placeholder="you@example.com">
+        </div>
+
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+          <button type="button" class="btn btn-success" id="submitWaitlist">Join the Waitlist</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const reserveModal = document.getElementById('reserveModal');
+
+    reserveModal.addEventListener('hide.bs.modal', () => {
+      // If anything inside the modal has focus, blur it manually
+      const focused = document.activeElement;
+      if (reserveModal.contains(focused)) {
+        focused.blur();
+      }
+    });
+    reserveModal.addEventListener('hidden.bs.modal', () => {
+      // Return focus to the trigger button
+      const triggerButton = document.querySelector('[data-bs-target="#reserveModal"]');
+      if (triggerButton) triggerButton.focus();
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const submitBtn = document.getElementById('submitWaitlist');
+      const emailInput = document.getElementById('waitlistEmail');
+      const modalElement = document.getElementById('reserveModal');
+      const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+
+      submitBtn.addEventListener('click', function () {
+        const email = emailInput.value.trim();
+        console.log("Submitted email:", email);
+
+        // Close the modal
+        modalInstance.hide();
+      });
+    });
+  </script>
+
 
 </body>
 </html>
